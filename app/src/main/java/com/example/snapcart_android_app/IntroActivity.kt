@@ -2,6 +2,8 @@ package com.example.snapcart_android_app
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +40,13 @@ import androidx.core.view.WindowInsetsCompat
 class IntroActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
         setContent {
             IntroScreen(onClick =  {
                 startActivity(Intent(this, MainActivity::class.java))
@@ -84,23 +93,24 @@ fun IntroScreen(onClick:()->Unit={}) {
             lineHeight = 24.sp
         )
 
-        Button(onClick = {onClick()},
+        Button(
+            onClick = { onClick() },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp)
-                .padding(horizontal = 32.dp,
-                    vertical = 16.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor =
-            colorResource(R.color.purple_500)),
+                .padding(horizontal = 32.dp), // Padding only on horizontal
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = colorResource(R.color.purple_500)
+            ),
             shape = RoundedCornerShape(10.dp)
         ) {
-            Text (
+            Text(
                 text = stringResource(id = R.string.letsgetstarted),
                 color = Color.White,
-                fontSize = 16.sp,
-
+                fontSize = 16.sp
             )
         }
+
 
         Text (
             text = stringResource(id = R.string.sign),
