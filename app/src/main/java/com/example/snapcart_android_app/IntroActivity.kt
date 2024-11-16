@@ -37,18 +37,19 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class IntroActivity : BaseActivity() {
+class IntroActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
+        // Handling the window appearance, combining behavior of BaseActivity and IntroActivity
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         setContent {
-            IntroScreen(onClick =  {
+            IntroScreen(onClick = {
                 startActivity(Intent(this, MainActivity::class.java))
             })
         }
@@ -57,28 +58,28 @@ class IntroActivity : BaseActivity() {
 
 @Composable
 @Preview
-
-fun IntroScreen(onClick:()->Unit={}) {
+fun IntroScreen(onClick: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
             .verticalScroll(rememberScrollState())
-                .padding(16.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image (
+        Image(
             painter = painterResource(id = R.drawable.intro_logo),
             contentDescription = "Intro Logo",
             modifier = Modifier
-                .padding(top=48.dp)
+                .padding(top = 48.dp)
                 .fillMaxWidth(),
             contentScale = ContentScale.Fit
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Text(text= stringResource(id= R.string.intro_title),
+        Text(
+            text = stringResource(id = R.string.intro_title),
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -86,7 +87,8 @@ fun IntroScreen(onClick:()->Unit={}) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Text(text= stringResource(id= R.string.intro_description),
+        Text(
+            text = stringResource(id = R.string.intro_description),
             fontSize = 16.sp,
             textAlign = TextAlign.Center,
             color = Color.Gray,
@@ -98,7 +100,7 @@ fun IntroScreen(onClick:()->Unit={}) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp)
-                .padding(horizontal = 32.dp), // Padding only on horizontal
+                .padding(horizontal = 32.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = colorResource(R.color.purple_500)
             ),
@@ -111,14 +113,11 @@ fun IntroScreen(onClick:()->Unit={}) {
             )
         }
 
-
-        Text (
+        Text(
             text = stringResource(id = R.string.sign),
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 16.dp),
             fontSize = 18.sp
-
-            )
-
+        )
     }
 }

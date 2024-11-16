@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "snapcart-android-app"
 include(":app")
- 
+include(":data")
+include(":domain")

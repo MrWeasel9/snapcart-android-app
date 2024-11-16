@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,26 +13,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Snapcartandroidapp"
+        android:name=".ShopperApp"
         tools:targetApi="31">
+
+        <!-- IntroActivity is the launcher activity, so it gets the MAIN and LAUNCHER intent filter -->
         <activity
             android:name=".IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".BaseActivity"
-            android:exported="false" />
+
+        <!-- MainActivity does not need MAIN and LAUNCHER here, it is just another activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="snapcart_android_app"
             android:theme="@style/Theme.Snapcartandroidapp">
-
         </activity>
+
     </application>
 
 </manifest>
