@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">snapcart-android-app</string>
+    <string name="intro_title">
+        Welcome to <font color="purple"> Snapcart </font>
+    </string>
+    <string name="intro_description">
+        <font color="grey_dark">Get cashback by scanning your receipts</font>
+    </string>
+    <string name="letsgetstarted">
+        "Let's Get Started!"
+    </string>
+    <string name="sign">
+        "Sign in Here"
+    </string>
 </resources>
