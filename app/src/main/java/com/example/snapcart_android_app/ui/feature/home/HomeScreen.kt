@@ -70,7 +70,47 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinView
         }
     }
 }
-
+@Composable
+fun ProfileHeader() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 16.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.align(Alignment.CenterStart)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_profile),
+                contentDescription = null,
+                modifier = Modifier.size(48.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Column {
+                Text(
+                    text = "Hello,", style = MaterialTheme.typography.bodySmall
+                )
+                Text(
+                    text = "MrWeasel9",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        }
+        Image(
+            painter = painterResource(id = R.drawable.notificatino),
+            contentDescription = null,
+            modifier = Modifier
+                .size(48.dp)
+                .align(Alignment.CenterEnd)
+                .clip(CircleShape)
+                .background(Color.LightGray.copy(alpha = 0.3f))
+                .padding(8.dp),
+            contentScale = ContentScale.Inside
+        )
+    }
+}
 @Composable
 fun HomeProductRow(products: List<Product>, title: String) {
     Column {
@@ -105,14 +145,46 @@ fun HomeProductRow(products: List<Product>, title: String) {
     }
 }
 
+@Composable
+fun SearchBar(value: String, onTextChanged: (String) -> Unit) {
 
+    TextField(
+        value = value,
+        onValueChange = onTextChanged,
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(32.dp),
+        leadingIcon = {
+            Image(
+                painter = painterResource(id = R.drawable.ic_search),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+        },
+        colors = TextFieldDefaults.colors(
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedContainerColor = Color.LightGray.copy(alpha = 0.3f),
+            unfocusedContainerColor = Color.LightGray.copy(alpha = 0.3f),
+        ),
+        placeholder = {
+            Text(
+                text = "Search for products",
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+    )
+
+}
 
 @Composable
 fun HomeContent(featured: List<Product>, popularProducts: List<Product>) {
     LazyColumn {
         item {
+            ProfileHeader()
             Spacer(modifier = Modifier.size(16.dp))
-
+            SearchBar(value = "", onTextChanged = {})
             Spacer(modifier = Modifier.size(16.dp))
         }
         item {
