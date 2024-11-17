@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.ui.tooling)
     implementation(libs.material3) // Adjust version as needed
     implementation(libs.androidx.material)
+    implementation(libs.coil.compose.v240)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

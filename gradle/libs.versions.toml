@@ -2,6 +2,7 @@
 accompanistPager = "0.28.0"
 agp = "8.7.0"
 coilCompose = "1.4.0"
+coilComposeVersion = "2.4.0"
 constraintlayoutCompose = "1.1.0"
 foundation = "1.7.5"
 glide = "4.15.1"
@@ -42,6 +43,7 @@ androidx-lifecycle-runtime-ktx-v287 = { module = "androidx.lifecycle:lifecycle-r
 androidx-material = { module = "androidx.compose.material:material", version.ref = "materialVersion" }
 androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+coil-compose-v240 = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
 glide = { module = "com.google.bumptech.glide:glide", version.ref = "glide" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
