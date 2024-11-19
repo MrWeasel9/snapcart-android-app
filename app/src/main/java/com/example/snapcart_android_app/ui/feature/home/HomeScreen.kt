@@ -1,5 +1,8 @@
 package com.example.snapcart_android_app.ui.feature.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -164,8 +168,15 @@ fun HomeProductRow(products: List<Product>, title: String) {
         }
         Spacer(modifier = Modifier.size(8.dp))
         LazyRow {
-            items(products) { product ->
-                ProductItem(product = product)
+            items(products, key = {it.id}) { product ->
+                val isVisible = remember { mutableStateOf(false) }
+                LaunchedEffect(true) {
+                    isVisible.value = true
+                }
+                AnimatedVisibility(visible = isVisible.value, enter = fadeIn() + expandVertically()) {
+                    ProductItem(product = product)
+                }
+
             }
         }
     }
@@ -232,16 +243,23 @@ fun HomeContent(featured: List<Product>, popularProducts: List<Product>,
             if (categories.isNotEmpty()) {
                 Spacer(modifier = Modifier.size(6.dp))
                 LazyRow {
-                    items(categories) { category ->
-                        Text(text = category.replaceFirstChar { it.uppercase() },
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(Color.LightGray.copy(alpha = 0.3f))
-                            .padding(8.dp))
+                    items(categories, key = {it}) { category ->
+                        val isVisible = remember { mutableStateOf(false) }
+                        LaunchedEffect(true) {
+                            isVisible.value = true
+                        }
+                        AnimatedVisibility(visible = isVisible.value, enter = fadeIn() + expandVertically()) {
+                            Text(text = category.replaceFirstChar { it.uppercase() },
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(Color.LightGray.copy(alpha = 0.3f))
+                                    .padding(8.dp))
+                        }
+
                     }
                 }
                 Spacer(modifier = Modifier.size(12.dp))

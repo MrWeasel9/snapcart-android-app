@@ -54,6 +54,11 @@ class MainActivity : ComponentActivity() {
                             composable("home") {
                                 HomeScreen(navController)
                             }
+                            composable("favorites") {
+                                Box(modifier = Modifier.fillMaxSize()) {
+                                    Text(text = "Favorites")
+                                }
+                            }
                             composable("cart") {
                                 Box(modifier = Modifier.fillMaxSize()) {
                                     Text(text = "Cart")
@@ -80,6 +85,7 @@ fun BottomNavigationBar(navController: NavController) {
         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
         val items = listOf(
             BottomNavItems.Home,
+            BottomNavItems.Favorites,
             BottomNavItems.Cart,
             BottomNavItems.Profile
         )
@@ -103,7 +109,11 @@ fun BottomNavigationBar(navController: NavController) {
                     Image(
                         painter = painterResource(id = item.icon),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(if(currentRoute==item.route) MaterialTheme.colorScheme.primary else Color.Gray)
+                        colorFilter = ColorFilter.tint(
+                            if(currentRoute==item.route)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                Color.Gray)
                     )
                 }, colors = NavigationBarItemDefaults.colors().copy(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
@@ -118,6 +128,7 @@ fun BottomNavigationBar(navController: NavController) {
 
 sealed class BottomNavItems(val route: String, val title: String, val icon: Int) {
     object Home : BottomNavItems("home", "Home", icon = R.drawable.ic_home)
+    object Favorites : BottomNavItems("favorites", "Favorites", icon = R.drawable.ic_fav)
     object Cart : BottomNavItems("cart", "Cart", icon = R.drawable.ic_cart)
     object Profile : BottomNavItems("profile", "Profile", icon = R.drawable.ic_profile_bn)
 }

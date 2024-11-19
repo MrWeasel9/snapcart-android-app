@@ -7,11 +7,11 @@ import com.example.snapcart_android_app.di.AppModules.appModule  // Updated impo
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class ShopperApp : Application() {
+class SnapCartApp : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidContext(this@ShopperApp)
+            androidContext(this@SnapCartApp)
             modules(
                 listOf(
                     appModule,
