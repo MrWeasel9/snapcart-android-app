@@ -3,16 +3,26 @@ package com.example.snapcart_android_app
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -20,15 +30,38 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
-import androidx.activity.compose.setContent
 
 class ContactFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        activity?.setContent {
-            ContactScreen()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.White)  // Ensure full white background
+                ) {
+                    TopAppBar(
+                        title = { Text("Contact Us") },
+                        navigationIcon = {
+                            IconButton(onClick = {
+                                activity?.onBackPressedDispatcher?.onBackPressed()
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = "Back"
+                                )
+                            }
+                        },
+                        backgroundColor = Color.White
+                    )
+                    ContactScreen()
+                }
+            }
         }
     }
 }
@@ -41,9 +74,10 @@ fun ContactScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 32.dp, start = 16.dp, end = 16.dp), // Leave space for status bar
+            .background(Color.White)  // Ensure white background
+            .padding(top = 32.dp, start = 16.dp, end = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center // Center content vertically
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = "Contact Us",
@@ -51,10 +85,9 @@ fun ContactScreen() {
             fontWeight = FontWeight.Bold,
             color = Color.Black,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 24.dp) // Add spacing below the title
+            modifier = Modifier.padding(bottom = 24.dp)
         )
 
-        // Clickable phone number
         Text(
             text = "Phone: $phoneNumber",
             fontSize = 18.sp,
@@ -65,7 +98,6 @@ fun ContactScreen() {
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .clickable {
-                    // Launch phone dialer with the number pre-filled
                     val intent = Intent(Intent.ACTION_DIAL).apply {
                         data = Uri.parse("tel:$phoneNumber")
                     }
@@ -73,7 +105,6 @@ fun ContactScreen() {
                 }
         )
 
-        // Clickable email
         Text(
             text = "Email: $email",
             fontSize = 18.sp,
@@ -84,7 +115,6 @@ fun ContactScreen() {
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .clickable {
-                    // Launch email app with the address pre-filled
                     val intent = Intent(Intent.ACTION_SENDTO).apply {
                         data = Uri.parse("mailto:$email")
                     }

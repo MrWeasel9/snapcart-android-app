@@ -4,6 +4,7 @@ import com.example.domain.model.Product
 
 interface NetworkService {
     suspend fun getProducts(category:String?): ResultWrapper<List<Product>>
+    suspend fun getCategories(): ResultWrapper<List<String>>
 
 }
 
