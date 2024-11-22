@@ -5,6 +5,7 @@ import com.example.domain.usecase.GetProductUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module{
+    // A new instance will be created each time it's needed, and its dependency is resolved using `get()`.
     factory { GetProductUseCase(get()) }
     factory { GetCategoriesUseCase(get()) }
 }

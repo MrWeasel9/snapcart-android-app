@@ -17,8 +17,13 @@ import io.ktor.http.contentType
 import io.ktor.util.InternalAPI
 import io.ktor.utils.io.errors.IOException
 
+
+// This class is responsible for making network requests to the FakeStore API
 class NetworkServiceImplementation(val client: HttpClient) : NetworkService {
+
     private val baseURL = "https://fakestoreapi.com"
+
+    // This function makes a GET request to the FakeStore API to get a list of products
     override suspend fun getProducts(category: String?): ResultWrapper<List<Product>> {
 
         val url = if (category != null) {
@@ -37,6 +42,7 @@ class NetworkServiceImplementation(val client: HttpClient) : NetworkService {
         )
     }
 
+    // This function makes a GET request to the FakeStore API to get a list of categories
     override suspend fun getCategories(): ResultWrapper<List<String>> {
         val url = "$baseURL/products/categories"
 
@@ -47,6 +53,7 @@ class NetworkServiceImplementation(val client: HttpClient) : NetworkService {
         )
     }
 
+    // This function makes a generic web request to the specified URL
     @OptIn(InternalAPI::class)
     suspend inline fun <reified T, R> makeWebRequest(
         url: String,

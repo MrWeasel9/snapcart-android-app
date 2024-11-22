@@ -12,6 +12,7 @@ import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 val networkModule = module {
+    // Defines a unique instance of HttpClient
     single {
         HttpClient(CIO) {
             install(ContentNegotiation) {
@@ -26,6 +27,7 @@ val networkModule = module {
             }
         }
     }
+    // Defines a unique instance of NetworkService
     single<NetworkService> {
         NetworkServiceImplementation(get())
     }

@@ -7,7 +7,7 @@ interface NetworkService {
     suspend fun getCategories(): ResultWrapper<List<String>>
 
 }
-
+// This wrapper allows consistent handling of success and failure scenarios.
 sealed class  ResultWrapper<out T> {
     data class Success<out T>(val value: T) : ResultWrapper<T>()
     data class Failure(val exception: Exception) : ResultWrapper<Nothing>()

@@ -86,21 +86,17 @@ fun IntroScreen(onClick: () -> Unit = {}, onContactClick: () -> Unit = {}) {
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = stringResource(id = R.string.intro_title),
+
+            text = "Welcome to Snapcart!\n " +
+                    "The easiest way to manage your shopping.",
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(vertical = 32.dp)
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Text(
-            text = stringResource(id = R.string.intro_description),
-            fontSize = 16.sp,
-            textAlign = TextAlign.Center,
-            color = Color.Gray,
-            lineHeight = 24.sp
-        )
 
         Button(
             onClick = { onClick() },
@@ -114,7 +110,7 @@ fun IntroScreen(onClick: () -> Unit = {}, onContactClick: () -> Unit = {}) {
             shape = RoundedCornerShape(10.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.letsgetstarted),
+                text = "Let's Get Started!",
                 color = Color.White,
                 fontSize = 16.sp
             )
@@ -141,10 +137,13 @@ fun IntroScreen(onClick: () -> Unit = {}, onContactClick: () -> Unit = {}) {
         }
 
         Text(
-            text = stringResource(id = R.string.sign),
+            text = "Sign in Here",
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 16.dp),
             fontSize = 18.sp
         )
+
+
     }
 }
+

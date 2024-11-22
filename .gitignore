@@ -35,6 +35,8 @@ replay_pid*
 # Build files
 build/
 **/build/
+.gradle/
+
 
 # IntelliJ/Android Studio specific files
 .idea/
