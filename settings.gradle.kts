@@ -17,6 +17,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
+
+
 }
 
 rootProject.name = "snapcart-android-app"

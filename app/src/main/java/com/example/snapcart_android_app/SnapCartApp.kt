@@ -6,6 +6,8 @@ import com.example.domain.di.domainModule
 import com.example.snapcart_android_app.di.AppModules.appModule  // Updated import
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import com.google.firebase.appcheck.FirebaseAppCheck
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 
 class SnapCartApp : Application() {
     override fun onCreate() {
@@ -20,5 +22,10 @@ class SnapCartApp : Application() {
                 )
             )
         }
+        // Initialize FirebaseAppCheck
+        val firebaseAppCheck = FirebaseAppCheck.getInstance()
+        firebaseAppCheck.installAppCheckProviderFactory(
+            PlayIntegrityAppCheckProviderFactory.getInstance()
+        )
     }
 }

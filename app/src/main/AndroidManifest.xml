@@ -33,6 +33,7 @@
             android:label="snapcart_android_app"
             android:theme="@style/Theme.Snapcartandroidapp">
         </activity>
+        <activity android:name=".AuthActivity" />
 
     </application>
 

@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +57,9 @@ class IntroActivity : AppCompatActivity() {
                         .replace(android.R.id.content, ContactFragment())
                         .addToBackStack(null)
                         .commit()
+                },
+                onSignInClick = {
+                    startActivity(Intent(this, AuthActivity::class.java))
                 }
             )
         }
@@ -64,8 +68,11 @@ class IntroActivity : AppCompatActivity() {
 
 @Composable
 @Preview
-fun IntroScreen(onClick: () -> Unit = {}, onContactClick: () -> Unit = {}) {
-    // IntroScreen implementation remains the same
+fun IntroScreen(
+    onClick: () -> Unit = {},
+    onContactClick: () -> Unit = {},
+    onSignInClick: () -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,7 +93,6 @@ fun IntroScreen(onClick: () -> Unit = {}, onContactClick: () -> Unit = {}) {
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-
             text = "Welcome to Snapcart!\n " +
                     "The easiest way to manage your shopping.",
             fontSize = 26.sp,
@@ -96,7 +102,6 @@ fun IntroScreen(onClick: () -> Unit = {}, onContactClick: () -> Unit = {}) {
         )
 
         Spacer(modifier = Modifier.height(32.dp))
-
 
         Button(
             onClick = { onClick() },
@@ -136,14 +141,16 @@ fun IntroScreen(onClick: () -> Unit = {}, onContactClick: () -> Unit = {}) {
             )
         }
 
-        Text(
-            text = "Sign in Here",
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 16.dp),
-            fontSize = 18.sp
-        )
-
-
+        TextButton(
+            onClick = { onSignInClick() },
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(
+                text = "Sign in Here",
+                textAlign = TextAlign.Center,
+                fontSize = 18.sp
+            )
+        }
     }
 }
 

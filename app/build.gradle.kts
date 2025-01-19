@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.firebase.appcheck.ktx)
+    implementation(libs.firebase.appcheck.playintegrity)
     releaseImplementation(libs.glide)
     implementation(libs.gson)
     implementation(libs.androidx.constraintlayout.compose)
@@ -91,4 +93,10 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.android.compose)
     implementation(libs.compose.navigation)
+
+    implementation(libs.firebase.auth)
+    implementation (libs.firebase.appcheck.playintegrity.v1601)
+    implementation(libs.firebase.database)
+    implementation(libs.material.v161)
 }
+apply(plugin = "com.google.gms.google-services")
