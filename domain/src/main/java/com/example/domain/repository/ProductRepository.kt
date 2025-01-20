@@ -5,4 +5,5 @@ import com.example.domain.network.ResultWrapper
 
 interface ProductRepository {
     suspend fun getProducts(category: String?): ResultWrapper<List<Product>>
+    suspend fun getProductById(id: Long): ResultWrapper<Product>
 }

@@ -30,7 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
+import com.example.snapcart_android_app.ui.feature.detail.ProductDetailScreen
 import com.example.snapcart_android_app.ui.feature.profile.ProfileScreen
 
 class MainActivity : ComponentActivity() {
@@ -67,6 +70,14 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("profile") {
                                 ProfileScreen(navController)
+                            }
+                            // Replace the existing composable for product_detail
+                            composable(
+                                "product_detail/{productId}",
+                                arguments = listOf(navArgument("productId") { type = NavType.LongType })
+                            ) { backStackEntry ->
+                                val productId = backStackEntry.arguments?.getLong("productId")
+                                ProductDetailScreen(productId = productId) // No need to pass ViewModel manually
                             }
                         }
                     }

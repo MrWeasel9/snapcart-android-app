@@ -10,4 +10,9 @@ class ProductRepositoryImplementation(private val networkService: NetworkService
         return networkService.getProducts(category)
     }
 
+    // Add implementation
+    override suspend fun getProductById(id: Long): ResultWrapper<Product> {
+        return networkService.getProductById(id)
+    }
+
 }

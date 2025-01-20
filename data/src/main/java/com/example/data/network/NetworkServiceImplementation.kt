@@ -53,6 +53,16 @@ class NetworkServiceImplementation(val client: HttpClient) : NetworkService {
         )
     }
 
+    // Add implementation
+    override suspend fun getProductById(id: Long): ResultWrapper<Product> {
+        val url = "$baseURL/products/$id"
+        return makeWebRequest(
+            url = url,
+            method = HttpMethod.Get,
+            mapper = { dataModel: DataProductModel -> dataModel.toProduct() }
+        )
+    }
+
     // This function makes a generic web request to the specified URL
     @OptIn(InternalAPI::class)
     suspend inline fun <reified T, R> makeWebRequest(
