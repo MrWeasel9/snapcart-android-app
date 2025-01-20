@@ -9,8 +9,10 @@ import kotlinx.coroutines.launch
 
 class UserViewModel : ViewModel() {
 
+
     private val _userState = MutableStateFlow<UserState>(UserState.Loading)
     val userState: StateFlow<UserState> = _userState
+
 
     init {
         fetchCurrentUser()
@@ -25,6 +27,11 @@ class UserViewModel : ViewModel() {
                 _userState.value = UserState.Unauthenticated
             }
         }
+    }
+
+    fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        _userState.value = UserState.Unauthenticated
     }
 
     sealed class UserState {
