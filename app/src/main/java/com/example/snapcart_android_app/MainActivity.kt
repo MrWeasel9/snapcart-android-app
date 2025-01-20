@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.snapcart_android_app.ui.feature.profile.ProfileScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,9 +66,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             composable("profile") {
-                                Box(modifier = Modifier.fillMaxSize()) {
-                                    Text(text = "Profile")
-                                }
+                                ProfileScreen(navController)
                             }
                         }
                     }
