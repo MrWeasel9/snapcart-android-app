@@ -39,6 +39,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.domain.model.CartItem
+import com.example.snapcart_android_app.ui.CartViewModel
+import com.example.snapcart_android_app.ui.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -46,6 +49,9 @@ fun ProductDetailScreen(productId: Long?) {
     val viewModel: ProductDetailViewModel = koinViewModel()
     val productState by viewModel.uiState.collectAsState()
     val isFavorite = remember { mutableStateOf(false) } // Temporary state for UI
+    val userViewModel: UserViewModel = koinViewModel()
+    val cartViewModel: CartViewModel = koinViewModel()
+    val userState by userViewModel.userState.collectAsState()
 
     LaunchedEffect(productId) {
         productId?.let { viewModel.getProductById(it) }
@@ -139,7 +145,23 @@ fun ProductDetailScreen(productId: Long?) {
                         }
 
                         Button(
-                            onClick = { /* TODO: Add to cart logic */ },
+                            onClick = {
+                                when (val state = userState) {
+                                    is UserViewModel.UserState.Authenticated -> {
+                                        cartViewModel.addToCart(
+                                            CartItem(
+                                                userId = state.user.uid,
+                                                productId = product.id,
+                                                productName = product.title
+                                            )
+                                        )
+                                    }
+
+                                    else -> {
+                                        // Show login prompt or navigate to auth
+                                    }
+                                }
+                            },
                             modifier = Modifier.weight(0.7f)
                         ) {
                             Icon(

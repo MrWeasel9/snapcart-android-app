@@ -1,5 +1,6 @@
 package com.example.snapcart_android_app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,13 +29,16 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
+import com.example.snapcart_android_app.ui.feature.cart.CartScreen
 import com.example.snapcart_android_app.ui.feature.detail.ProductDetailScreen
 import com.example.snapcart_android_app.ui.feature.profile.ProfileScreen
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,9 +68,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             composable("cart") {
-                                Box(modifier = Modifier.fillMaxSize()) {
-                                    Text(text = "Cart")
-                                }
+                                CartScreen(navController)
                             }
                             composable("profile") {
                                 ProfileScreen(navController)
@@ -79,6 +81,7 @@ class MainActivity : ComponentActivity() {
                                 val productId = backStackEntry.arguments?.getLong("productId")
                                 ProductDetailScreen(productId = productId) // No need to pass ViewModel manually
                             }
+
                         }
                     }
                 }

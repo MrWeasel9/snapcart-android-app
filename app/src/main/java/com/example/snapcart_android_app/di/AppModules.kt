@@ -1,5 +1,7 @@
 package com.example.snapcart_android_app.di
 
+import com.example.snapcart_android_app.ui.CartViewModel
+import com.example.snapcart_android_app.ui.UserViewModel
 import com.example.snapcart_android_app.ui.feature.home.HomeViewModel
 import com.example.snapcart_android_app.ui.feature.detail.ProductDetailViewModel
 import org.koin.core.module.dsl.viewModel
@@ -12,13 +14,16 @@ object AppModules {
         viewModel {
             HomeViewModel(get(), get())
         }
+        viewModel { ProductDetailViewModel(get()) }
+        viewModel { CartViewModel(get(), get(), get()) }
+        viewModel { UserViewModel() }
         // Add ViewModel to Koin modules
 
     }
 
     // Defines a unique instance of AppModule
     val appModule = module {
-        viewModel { ProductDetailViewModel(get()) }
+
         includes(
             viewModelModule
         )
