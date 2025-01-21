@@ -15,7 +15,7 @@ object AppModules {
             HomeViewModel(get(), get())
         }
         viewModel { ProductDetailViewModel(get()) }
-        viewModel { CartViewModel(get(), get(), get()) }
+        viewModel { CartViewModel(get(), get(), get(), get()) }
         viewModel { UserViewModel() }
         // Add ViewModel to Koin modules
 
