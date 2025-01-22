@@ -23,7 +23,10 @@ class CartViewModel(
     private val _cartProducts = MutableStateFlow<List<CartProduct>>(emptyList())
     val cartProducts: StateFlow<List<CartProduct>> = _cartProducts
 
+    private var currentUserId: String? = null
+
     fun loadCartItems(userId: String) {
+        currentUserId = userId
         viewModelScope.launch {
             when (val result = getCartItemsUseCase.execute(userId)) {
                 is ResultWrapper.Success -> {
@@ -52,6 +55,13 @@ class CartViewModel(
         viewModelScope.launch {
             addToCartUseCase.execute(item)
             loadCartItems(item.userId)
+        }
+    }
+
+    fun removeItem(itemId: String) {
+        viewModelScope.launch {
+            removeFromCartUseCase.execute(itemId)
+            currentUserId?.let { loadCartItems(it) }
         }
     }
 }

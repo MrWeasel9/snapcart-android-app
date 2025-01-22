@@ -103,6 +103,7 @@ dependencies {
     implementation (platform(libs.firebase.bom))
     implementation (libs.play.services.auth)
     implementation (libs.google.firebase.firestore.ktx)
+    implementation (libs.androidx.material.icons.extended)
 }
 
 apply(plugin = "com.google.gms.google-services")

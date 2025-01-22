@@ -23,9 +23,12 @@ class CartRepositoryImplementation : CartRepository {
     override suspend fun getCartItems(userId: String): ResultWrapper<List<CartItem>> {
         return try {
             val result = cartCollection.whereEqualTo("userId", userId).get().await()
-            ResultWrapper.Success(result.toObjects(CartItem::class.java))
+            val cartItems = result.documents.mapNotNull { document ->
+                document.toObject(CartItem::class.java)?.copy(id = document.id)
+            }
+            ResultWrapper.Success(cartItems)
         } catch (e: Exception) {
-            e.printStackTrace() // Log the error
+            e.printStackTrace()
             ResultWrapper.Failure(e)
         }
     }
