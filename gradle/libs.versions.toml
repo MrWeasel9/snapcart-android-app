@@ -1,6 +1,7 @@
 [versions]
 accompanistPager = "0.28.0"
 agp = "8.7.0"
+animation = "<compose_version>"
 coilCompose = "1.4.0"
 coilComposeVersion = "2.4.0"
 constraintlayoutCompose = "1.1.0"
@@ -47,6 +48,7 @@ firebaseFirestoreKtx = "25.1.1"
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
+androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }

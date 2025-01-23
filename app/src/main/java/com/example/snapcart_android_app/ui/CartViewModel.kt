@@ -20,6 +20,7 @@ class CartViewModel(
     private val removeFromCartUseCase: RemoveFromCartUseCase,
     private val getProductByIdUseCase: GetProductByIdUseCase // Added
 ) : ViewModel() {
+
     private val _cartProducts = MutableStateFlow<List<CartProduct>>(emptyList())
     val cartProducts: StateFlow<List<CartProduct>> = _cartProducts
 
