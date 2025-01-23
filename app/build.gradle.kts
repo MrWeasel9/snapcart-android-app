@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.firebase.appcheck.ktx)
     implementation(libs.firebase.appcheck.playintegrity)
+    testImplementation(libs.junit.junit)
     releaseImplementation(libs.glide)
     implementation(libs.gson)
     implementation(libs.androidx.constraintlayout.compose)
@@ -85,8 +86,7 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.coil.compose.v240)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
@@ -106,6 +106,27 @@ dependencies {
     implementation (libs.androidx.material.icons.extended)
     implementation (libs.androidx.animation)
     implementation (libs.firebase.messaging.ktx)
+
+    testImplementation (libs.mockito.kotlin)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.turbine )// For Flow testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    testImplementation (libs.mockito.core)
+    testImplementation (libs.kotlinx.coroutines.test.v152)
+
+    testImplementation (libs.mockk.mockk)
+    testImplementation (libs.turbine.v100)
+    testImplementation(libs.slf4j.simple)
+    testImplementation(libs.byte.buddy)
 }
 
 apply(plugin = "com.google.gms.google-services")
+
+// In app/build.gradle
+tasks.withType<Test> {
+    jvmArgs = listOf(
+        "-XX:+EnableDynamicAgentLoading",
+        "-Djdk.instrument.traceUsage=false"
+    )
+}
