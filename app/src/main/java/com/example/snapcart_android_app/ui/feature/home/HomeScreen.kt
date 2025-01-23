@@ -49,11 +49,13 @@ import coil.compose.AsyncImage
 import androidx.navigation.NavController
 import com.example.domain.model.Product
 import com.example.snapcart_android_app.R
+import com.example.snapcart_android_app.ui.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinViewModel()) {
+fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinViewModel(), viewmodel: UserViewModel = koinViewModel()) {
     val uiState = viewModel.uiState.collectAsState()
+
     val loading = remember {
         mutableStateOf(false)
     }
@@ -101,7 +103,8 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinView
     }
 }
 @Composable
-fun ProfileHeader() {
+fun ProfileHeader(viewmodel: UserViewModel = koinViewModel()) {
+    val user = viewmodel.userState.collectAsState()
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -112,17 +115,20 @@ fun ProfileHeader() {
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_profile),
+                painter = painterResource(id = R.mipmap.ic_launcher),
                 contentDescription = null,
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Column {
                 Text(
-                    text = "Hello,", style = MaterialTheme.typography.bodySmall
-                )
-                Text(
-                    text = "MrWeasel9",
+                    text = when (user.value) {
+                        is UserViewModel.UserState.Authenticated -> {
+                            "Welcome, ${(user.value as UserViewModel.UserState.Authenticated).user.email?.split("@")
+                                ?.get(0)}"
+                        }
+                        else -> "Sign in to continue"
+                    },
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )

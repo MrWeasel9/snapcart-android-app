@@ -119,7 +119,6 @@ fun BottomNavigationBar(navController: NavController) {
         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
         val items = listOf(
             BottomNavItems.Home,
-            BottomNavItems.Favorites,
             BottomNavItems.Cart,
             BottomNavItems.Profile
         )
@@ -162,7 +161,6 @@ fun BottomNavigationBar(navController: NavController) {
 
 sealed class BottomNavItems(val route: String, val title: String, val icon: Int) {
     object Home : BottomNavItems("home", "Home", icon = R.drawable.ic_home)
-    object Favorites : BottomNavItems("favorites", "Favorites", icon = R.drawable.ic_fav)
     object Cart : BottomNavItems("cart", "Cart", icon = R.drawable.ic_cart)
     object Profile : BottomNavItems("profile", "Profile", icon = R.drawable.ic_profile_bn)
 }
