@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Login
-import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,20 +28,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.example.snapcart_android_app.AuthActivity
-import com.example.snapcart_android_app.ui.OrdersViewModel
-import com.example.snapcart_android_app.ui.UserViewModel
+import com.example.snapcart_android_app.ui.model.OrdersViewModel
+import com.example.snapcart_android_app.ui.model.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.ShoppingBag
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -55,7 +52,7 @@ import androidx.compose.runtime.remember
 import com.example.domain.model.Order
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen() {
     val userViewModel: UserViewModel = viewModel()
     val context = LocalContext.current
     val userState = userViewModel.userState.collectAsState()
@@ -177,7 +174,7 @@ private fun AuthenticatedView(
             )
         ) {
             Icon(
-                imageVector = Icons.Default.Logout,
+                imageVector = Icons.AutoMirrored.Filled.Logout,
                 contentDescription = "Logout"
             )
             Spacer(modifier = Modifier.width(8.dp))

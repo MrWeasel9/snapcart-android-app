@@ -1,4 +1,4 @@
-package com.example.snapcart_android_app.ui
+package com.example.snapcart_android_app.ui.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,8 +35,8 @@ class UserViewModel : ViewModel() {
     }
 
     sealed class UserState {
-        object Loading : UserState()
-        object Unauthenticated : UserState()
+        data object Loading : UserState()
+        data object Unauthenticated : UserState()
         data class Authenticated(val user: com.google.firebase.auth.FirebaseUser) : UserState()
     }
 }

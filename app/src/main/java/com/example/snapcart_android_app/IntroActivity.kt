@@ -1,12 +1,9 @@
 package com.example.snapcart_android_app
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,52 +13,58 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 
 
 class IntroActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Window appearance settings
-        window.apply {
-            setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        // Window configuration
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        window.statusBarColor = Color.Transparent.toArgb()
+
+        // Detect dark mode
+        val isDarkTheme = resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+        // Control status bar icons
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = !isDarkTheme
         }
 
         setContent {
-            IntroScreen(
-                onClick = {
-                    startActivity(Intent(this, MainActivity::class.java))
-                },
-                onContactClick = {
-                    // Use replace instead of add
-                    supportFragmentManager.beginTransaction()
-                        .replace(android.R.id.content, ContactFragment())
-                        .addToBackStack(null)
-                        .commit()
-                },
-                onSignInClick = {
-                    startActivity(Intent(this, AuthActivity::class.java))
-                }
-            )
+            MaterialTheme(
+                colorScheme = if (isDarkTheme) darkColorScheme() else lightColorScheme()
+            ) {
+                IntroScreen(
+                    onClick = { startActivity(Intent(this, MainActivity::class.java)) },
+                    onContactClick = {
+                        supportFragmentManager.beginTransaction()
+                            .replace(android.R.id.content, ContactFragment())
+                            .addToBackStack(null)
+                            .commit()
+                    },
+                    onSignInClick = { startActivity(Intent(this, AuthActivity::class.java)) }
+                )
+            }
         }
     }
 }
@@ -73,10 +76,12 @@ fun IntroScreen(
     onContactClick: () -> Unit = {},
     onSignInClick: () -> Unit = {}
 ) {
+    val colorScheme = MaterialTheme.colorScheme
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -93,11 +98,11 @@ fun IntroScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = "Welcome to Snapcart!\n " +
-                    "The easiest way to manage your shopping.",
+            text = "Welcome to Snapcart!\nThe easiest way to manage your shopping.",
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
+            color = colorScheme.onBackground,
             modifier = Modifier.padding(vertical = 32.dp)
         )
 
@@ -110,13 +115,13 @@ fun IntroScreen(
                 .height(48.dp)
                 .padding(horizontal = 32.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(R.color.purple_500)
+                containerColor = colorScheme.primary,
+                contentColor = colorScheme.onPrimary
             ),
             shape = RoundedCornerShape(10.dp)
         ) {
             Text(
                 text = "Let's Get Started!",
-                color = Color.White,
                 fontSize = 16.sp
             )
         }
@@ -130,13 +135,13 @@ fun IntroScreen(
                 .height(48.dp)
                 .padding(horizontal = 32.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.LightGray
+                containerColor = colorScheme.surfaceVariant,
+                contentColor = colorScheme.onSurfaceVariant
             ),
             shape = RoundedCornerShape(10.dp)
         ) {
             Text(
                 text = "Contact",
-                color = Color.Black,
                 fontSize = 16.sp
             )
         }
@@ -148,7 +153,8 @@ fun IntroScreen(
             Text(
                 text = "Sign in Here",
                 textAlign = TextAlign.Center,
-                fontSize = 18.sp
+                fontSize = 18.sp,
+                color = colorScheme.primary
             )
         }
     }

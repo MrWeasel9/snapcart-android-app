@@ -1,9 +1,9 @@
 package com.example.snapcart_android_app.di
 
 import com.example.domain.repository.NetworkStatusProvider
-import com.example.snapcart_android_app.ui.CartViewModel
-import com.example.snapcart_android_app.ui.OrdersViewModel
-import com.example.snapcart_android_app.ui.UserViewModel
+import com.example.snapcart_android_app.ui.model.CartViewModel
+import com.example.snapcart_android_app.ui.model.OrdersViewModel
+import com.example.snapcart_android_app.ui.model.UserViewModel
 import com.example.snapcart_android_app.ui.feature.home.HomeViewModel
 import com.example.snapcart_android_app.ui.feature.detail.ProductDetailViewModel
 import com.example.snapcart_android_app.utils.NetworkStatusProviderImplementation

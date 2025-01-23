@@ -49,7 +49,7 @@ import coil.compose.AsyncImage
 import androidx.navigation.NavController
 import com.example.domain.model.Product
 import com.example.snapcart_android_app.R
-import com.example.snapcart_android_app.ui.UserViewModel
+import com.example.snapcart_android_app.ui.model.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

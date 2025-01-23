@@ -20,13 +20,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -51,8 +48,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.domain.model.CartItem
-import com.example.snapcart_android_app.ui.CartViewModel
-import com.example.snapcart_android_app.ui.UserViewModel
+import com.example.snapcart_android_app.ui.model.CartViewModel
+import com.example.snapcart_android_app.ui.model.UserViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 

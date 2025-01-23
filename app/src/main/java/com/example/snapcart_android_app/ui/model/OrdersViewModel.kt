@@ -1,4 +1,4 @@
-package com.example.snapcart_android_app.ui
+package com.example.snapcart_android_app.ui.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,7 +26,7 @@ class OrdersViewModel(private val getOrdersUseCase: GetOrdersUseCase) : ViewMode
     }
 
     sealed class OrdersState {
-        object Loading : OrdersState()
+        data object Loading : OrdersState()
         data class Success(val orders: List<com.example.domain.model.Order>) : OrdersState()
         data class Error(val message: String) : OrdersState()
     }

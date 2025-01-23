@@ -1,7 +1,5 @@
 package com.example.snapcart_android_app.ui.feature.cart
 
-import android.content.Intent
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideOutHorizontally
@@ -32,20 +30,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.snapcart_android_app.AuthActivity
-import com.example.snapcart_android_app.ui.CartViewModel
-import com.example.snapcart_android_app.ui.UserViewModel
+import com.example.snapcart_android_app.ui.model.CartViewModel
+import com.example.snapcart_android_app.ui.model.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -54,7 +48,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun CartScreen(navController: NavController) {
+fun CartScreen() {
 
     val cartViewModel: CartViewModel = koinViewModel()
     val userViewModel: UserViewModel = viewModel()

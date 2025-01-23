@@ -1,6 +1,5 @@
 package com.example.snapcart_android_app
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,15 +12,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.snapcart_android_app.ui.feature.home.HomeScreen
 import com.example.snapcart_android_app.ui.theme.ShopperTheme
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.runtime.getValue // Fix delegate error
 import androidx.compose.runtime.remember // For SnackbarHostState
 import androidx.compose.material3.SnackbarHostState
@@ -35,7 +30,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.NavType
@@ -46,7 +40,6 @@ import com.example.domain.repository.NetworkStatusProvider
 import com.example.snapcart_android_app.ui.feature.cart.CartScreen
 import com.example.snapcart_android_app.ui.feature.detail.ProductDetailScreen
 import com.example.snapcart_android_app.ui.feature.profile.ProfileScreen
-import com.google.firebase.auth.FirebaseAuth
 import org.koin.compose.koinInject
 
 class MainActivity : ComponentActivity() {
@@ -89,10 +82,10 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             composable("cart") {
-                                CartScreen(navController)
+                                CartScreen()
                             }
                             composable("profile") {
-                                ProfileScreen(navController)
+                                ProfileScreen()
                             }
                             // Replace the existing composable for product_detail
                             composable(

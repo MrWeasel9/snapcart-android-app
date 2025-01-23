@@ -1,4 +1,4 @@
-package com.example.snapcart_android_app.ui
+package com.example.snapcart_android_app.ui.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,8 +6,6 @@ import com.example.domain.model.CartItem
 import com.example.domain.model.Order
 import com.example.domain.network.ResultWrapper
 import com.example.domain.usecase.*
-import com.example.snapcart_android_app.ui.model.CartProduct
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,8 +30,8 @@ class CartViewModel(
     private val _checkoutState = MutableStateFlow<CheckoutState>(CheckoutState.Idle)
     val checkoutState: StateFlow<CheckoutState> = _checkoutState
     sealed class CheckoutState {
-        object Idle : CheckoutState()
-        object Loading : CheckoutState()
+        data object Idle : CheckoutState()
+        data object Loading : CheckoutState()
         data class Success(val totalPrice: Double) : CheckoutState()
         data class Error(val message: String) : CheckoutState()
     }

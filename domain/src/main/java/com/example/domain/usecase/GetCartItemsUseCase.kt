@@ -1,6 +1,5 @@
 package com.example.domain.usecase
 
-import com.example.domain.model.CartItem
 import com.example.domain.repository.CartRepository
 
 // GetCartItemsUseCase.kt

@@ -14,7 +14,7 @@ class NetworkStatusProviderImplementation(context: Context) : NetworkStatusProvi
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    private val _networkState = MutableStateFlow<NetworkState>(getCurrentNetworkState())
+    private val _networkState = MutableStateFlow(getCurrentNetworkState())
     override val networkState: StateFlow<NetworkState> = _networkState
 
     private val networkReceiver = object : BroadcastReceiver() {
