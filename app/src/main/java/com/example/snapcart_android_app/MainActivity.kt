@@ -22,11 +22,17 @@ import com.example.snapcart_android_app.ui.theme.ShopperTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.runtime.getValue // Fix delegate error
+import androidx.compose.runtime.remember // For SnackbarHostState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
@@ -35,10 +41,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
+import com.example.domain.model.NetworkState
+import com.example.domain.repository.NetworkStatusProvider
 import com.example.snapcart_android_app.ui.feature.cart.CartScreen
 import com.example.snapcart_android_app.ui.feature.detail.ProductDetailScreen
 import com.example.snapcart_android_app.ui.feature.profile.ProfileScreen
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.compose.koinInject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,16 +56,28 @@ class MainActivity : ComponentActivity() {
         setContent {
             ShopperTheme {
                 val navController = rememberNavController()
+                val snackbarHostState = remember { SnackbarHostState() }
+                val networkStatusProvider: NetworkStatusProvider = koinInject()
+                val networkState by networkStatusProvider.networkState.collectAsState(
+                    initial = NetworkState.Connected // Add initial value
+                )
+
+                LaunchedEffect(networkState) {
+                    if (networkState is NetworkState.Disconnected) {
+                        snackbarHostState.showSnackbar("No internet connection")
+                    }
+                }
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
                         BottomNavigationBar(navController)
-                    }
-                ) {
+                    },
+                    snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+                ) { innerPadding ->
                     Surface(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(it)
+                            .padding(innerPadding)
                     ) {
                         NavHost(navController = navController, startDestination = "home") {
                             composable("home") {
