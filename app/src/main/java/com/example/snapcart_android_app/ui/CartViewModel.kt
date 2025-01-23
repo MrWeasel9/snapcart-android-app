@@ -29,7 +29,14 @@ class CartViewModel(
     val cartProducts: StateFlow<List<CartProduct>> = _cartProducts
 
     private var currentUserId: String? = null
-
+    private val _checkoutState = MutableStateFlow<CheckoutState>(CheckoutState.Idle)
+    val checkoutState: StateFlow<CheckoutState> = _checkoutState
+    sealed class CheckoutState {
+        object Idle : CheckoutState()
+        object Loading : CheckoutState()
+        data class Success(val totalPrice: Double) : CheckoutState()
+        data class Error(val message: String) : CheckoutState()
+    }
     fun loadCartItems(userId: String) {
         currentUserId = userId
         viewModelScope.launch {
@@ -71,6 +78,7 @@ class CartViewModel(
     }
     fun checkout(userId: String, totalPrice: Double) {
         viewModelScope.launch {
+            _checkoutState.value = CheckoutState.Loading
             val cartItems = _cartProducts.value.map { it.cartItem }
             val order = Order(
                 id = UUID.randomUUID().toString(),
@@ -82,12 +90,16 @@ class CartViewModel(
             when (val result = createOrderUseCase.execute(order)) {
                 is ResultWrapper.Success -> {
                     clearCartUseCase.execute(userId)
-                    loadCartItems(userId) // Refresh cart
+                    loadCartItems(userId)
+                    _checkoutState.value = CheckoutState.Success(totalPrice) // Emit success
                 }
                 is ResultWrapper.Failure -> {
-                    // Handle error (e.g., show snackbar)
+                    _checkoutState.value = CheckoutState.Error("Checkout failed")
                 }
             }
         }
+    }
+    fun resetCheckoutState() {
+        _checkoutState.value = CheckoutState.Idle
     }
 }

@@ -105,7 +105,7 @@ dependencies {
     implementation (libs.google.firebase.firestore.ktx)
     implementation (libs.androidx.material.icons.extended)
     implementation (libs.androidx.animation)
-
+    implementation (libs.firebase.messaging.ktx)
 }
 
 apply(plugin = "com.google.gms.google-services")

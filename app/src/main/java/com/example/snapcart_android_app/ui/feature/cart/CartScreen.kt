@@ -49,11 +49,13 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.example.snapcart_android_app.utils.NotificationHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun CartScreen(navController: NavController) {
+
     val cartViewModel: CartViewModel = koinViewModel()
     val userViewModel: UserViewModel = viewModel()
     val userState by userViewModel.userState.collectAsState()
@@ -73,6 +75,22 @@ fun CartScreen(navController: NavController) {
     LaunchedEffect(userState) {
         if (userState is UserViewModel.UserState.Authenticated) {
             cartViewModel.loadCartItems((userState as UserViewModel.UserState.Authenticated).user.uid)
+        }
+    }
+
+    LaunchedEffect(cartViewModel.checkoutState) {
+        cartViewModel.checkoutState.collect { state ->
+            when (state) {
+                is CartViewModel.CheckoutState.Success -> {
+                    NotificationHelper.showNotification(
+                        context = context,
+                        title = "Order Received",
+                        message = "Order received, value: $${"%.2f".format(state.totalPrice)}"
+                    )
+                    cartViewModel.resetCheckoutState() // Reset state
+                }
+                else -> {}
+            }
         }
     }
 
