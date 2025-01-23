@@ -162,7 +162,12 @@ fun CartScreen(navController: NavController) {
                         style = MaterialTheme.typography.titleMedium
                     )
                     Button(
-                        onClick = { /* TODO: Checkout logic */ }
+                        onClick = {
+                            if (userState is UserViewModel.UserState.Authenticated) {
+                                val userId = (userState as UserViewModel.UserState.Authenticated).user.uid
+                                cartViewModel.checkout(userId, totalPrice)
+                            }
+                        }
                     ) {
                         Text("Checkout")
                     }

@@ -3,6 +3,7 @@ package com.example.snapcart_android_app.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.CartItem
+import com.example.domain.model.Order
 import com.example.domain.network.ResultWrapper
 import com.example.domain.usecase.*
 import com.example.snapcart_android_app.ui.model.CartProduct
@@ -12,13 +13,16 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 // Modify the ViewModel
 class CartViewModel(
     private val addToCartUseCase: AddToCartUseCase,
     private val getCartItemsUseCase: GetCartItemsUseCase,
     private val removeFromCartUseCase: RemoveFromCartUseCase,
-    private val getProductByIdUseCase: GetProductByIdUseCase // Added
+    private val getProductByIdUseCase: GetProductByIdUseCase,
+    private val createOrderUseCase: CreateOrderUseCase,
+    private val clearCartUseCase: ClearCartUseCase
 ) : ViewModel() {
 
     private val _cartProducts = MutableStateFlow<List<CartProduct>>(emptyList())
@@ -63,6 +67,27 @@ class CartViewModel(
         viewModelScope.launch {
             removeFromCartUseCase.execute(itemId)
             currentUserId?.let { loadCartItems(it) }
+        }
+    }
+    fun checkout(userId: String, totalPrice: Double) {
+        viewModelScope.launch {
+            val cartItems = _cartProducts.value.map { it.cartItem }
+            val order = Order(
+                id = UUID.randomUUID().toString(),
+                userId = userId,
+                items = cartItems,
+                totalPrice = totalPrice
+            )
+
+            when (val result = createOrderUseCase.execute(order)) {
+                is ResultWrapper.Success -> {
+                    clearCartUseCase.execute(userId)
+                    loadCartItems(userId) // Refresh cart
+                }
+                is ResultWrapper.Failure -> {
+                    // Handle error (e.g., show snackbar)
+                }
+            }
         }
     }
 }

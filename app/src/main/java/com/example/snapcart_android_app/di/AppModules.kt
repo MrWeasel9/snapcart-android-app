@@ -1,6 +1,7 @@
 package com.example.snapcart_android_app.di
 
 import com.example.snapcart_android_app.ui.CartViewModel
+import com.example.snapcart_android_app.ui.OrdersViewModel
 import com.example.snapcart_android_app.ui.UserViewModel
 import com.example.snapcart_android_app.ui.feature.home.HomeViewModel
 import com.example.snapcart_android_app.ui.feature.detail.ProductDetailViewModel
@@ -15,8 +16,9 @@ object AppModules {
             HomeViewModel(get(), get())
         }
         viewModel { ProductDetailViewModel(get()) }
-        viewModel { CartViewModel(get(), get(), get(), get()) }
+        viewModel { CartViewModel(get(), get(), get(), get(), get(), get()) }
         viewModel { UserViewModel() }
+        viewModel { OrdersViewModel(get()) }
         // Add ViewModel to Koin modules
 
     }
